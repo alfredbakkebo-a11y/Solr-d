@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solråd | Sivilingeniører innen solenergi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --solrad-blue: #0a1929;
+            --solrad-accent: #3b82f6;
+            --solrad-gray: #f8fafc;
+        }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            scroll-behavior: smooth;
+        }
+        .bg-solrad-blue { background-color: var(--solrad-blue); }
+        .hero-gradient {
+            background: radial-gradient(circle at top right, #1e293b, #0a1929);
+        }
+        .tech-card {
+            border-left: 4px solid var(--solrad-accent);
+            transition: all 0.3s ease;
+        }
+        .tech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-900">
+
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center gap-3">
+                    <svg width="40" height="40" viewBox="0 0 100 100" fill="none" class="text-slate-900">
+                        <path d="M50 10L10 50L20 60L50 30L80 60L90 50L50 10Z" fill="currentColor"/>
+                        <path d="M30 70L50 90L70 70L50 50L30 70Z" fill="currentColor"/>
+                    </svg>
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-black text-slate-900 leading-none uppercase tracking-tighter">Solråd</span>
+                        <span class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Sivilingeniører</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8 text-xs font-bold uppercase tracking-widest">
+                    <a href="#tjenester" class="hover:text-blue-600 transition">Tjenester</a>
+                    <a href="#teknologi" class="hover:text-blue-600 transition">Teknikk</a>
+                    <a href="#kontakt" class="bg-slate-900 text-white px-5 py-2.5 rounded hover:bg-slate-800 transition">Kontakt</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="pt-40 pb-24 hero-gradient text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-4xl">
+                <h1 id="hero-title" class="text-5xl md:text-7xl font-extrabold leading-[1.1] mb-8">
+                    Uavhengig kontroll av <br><span class="text-blue-400">storskala</span> solenergi.
+                </h1>
+                <p id="hero-description" class="text-xl text-slate-300 leading-relaxed mb-10 max-w-2xl">
+                    Vi bistår profesjonelle byggherrer med teknisk prosjektering og tredjepartskontroll. Vi sikrer at anlegget leverer som lovet – uten ubehagelige overraskelser i drift.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#kontakt" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded font-bold transition">Book konsultasjon</a>
+                    <a href="#tjenester" class="bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded font-bold transition border border-white/20">Våre tjenester</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="teknologi" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="order-2 lg:order-1">
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200">
+                        <img src="https://images.unsplash.com/photo-1611365892117-00ac5ef43c90?auto=format&fit=crop&q=80&w=1200" alt="Takmontert solcelleanlegg teknisk detalj" class="w-full aspect-video object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent flex items-end p-8">
+                            <span class="text-white text-sm font-mono tracking-tighter bg-blue-600 px-3 py-1">TECH-REF: 10° EAST-WEST CONFIG</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2">
+                    <h2 class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-4">Teknisk Spesifikasjon</h2>
+                    <h3 id="tech-title" class="text-4xl font-black text-slate-900 mb-6 uppercase">Optimalisert for nordiske tak</h3>
+                    <p id="tech-description" class="text-slate-600 mb-8 leading-relaxed">
+                        For flate tak prosjekterer vi primært med aerodynamiske montasjesystemer som 10° øst/vest. Dette gir en unik kombinasjon av lav ballastvekt, høy arealeffektivitet og redusert vindfang.
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-3 text-slate-700 font-medium">
+                            <i class="fas fa-check-circle text-blue-500"></i> Lavest mulig punklast på takmembran
+                        </li>
+                        <li class="flex items-center gap-3 text-slate-700 font-medium">
+                            <i class="fas fa-check-circle text-blue-500"></i> Optimalisert egenforbruk med jevn daglig kurve
+                        </li>
+                        <li class="flex items-center gap-3 text-slate-700 font-medium">
+                            <i class="fas fa-check-circle text-blue-500"></i> Lynrask montering og uavhengig ballastering
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tjenester" class="py-24 bg-slate-50 border-y border-slate-200">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-16">
+                <h3 class="text-3xl font-black text-slate-900 uppercase tracking-tighter">Vår ingeniør-metodikk</h3>
+                <div class="w-16 h-1 bg-blue-600 mt-4"></div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-10 tech-card">
+                    <div class="text-slate-400 text-xs font-mono mb-4">01 // ANALYSIS</div>
+                    <h4 class="text-xl font-bold mb-4">Gevinstanalyse</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">Uavhengig simulering av produksjonsdata basert på faktiske værdata og skyggeforhold.</p>
+                </div>
+                <div class="bg-white p-10 tech-card">
+                    <div class="text-slate-400 text-xs font-mono mb-4">02 // QUALITY</div>
+                    <h4 class="text-xl font-bold mb-4">Kravspesifikasjon</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">Vi definerer de tekniske rammene for anbudet slik at du unngår billige løsninger med kort levetid.</p>
+                </div>
+                <div class="bg-white p-10 tech-card">
+                    <div class="text-slate-400 text-xs font-mono mb-4">03 // INSPECTION</div>
+                    <h4 class="text-xl font-bold mb-4">Tredjepartskontroll</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">Fysisk inspeksjon av montasje, kabling og dokumentasjon i henhold til NEK 400.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kontakt" class="py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="bg-slate-900 rounded-3xl overflow-hidden flex flex-col md:flex-row shadow-2xl">
+                <div class="md:w-1/2 p-12 lg:p-16">
+                    <h3 class="text-3xl font-bold text-white mb-6">Klar for en profesjonell gjennomgang?</h3>
+                    <p class="text-slate-400 mb-10">Vi svarer på tekniske spørsmål innen 24 timer.</p>
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4 text-white">
+                            <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-blue-400">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <span class="font-medium">post@solraad.no</span>
+                        </div>
+                        <div class="flex items-center gap-4 text-white">
+                            <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-blue-400">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <span class="font-medium">Oslo / Hele landet</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 bg-white p-12 lg:p-16">
+                    <form class="space-y-5">
+                        <input type="text" placeholder="Fullt navn" class="w-full p-4 border border-slate-200 rounded outline-none focus:border-blue-500 transition">
+                        <input type="text" placeholder="Firma" class="w-full p-4 border border-slate-200 rounded outline-none focus:border-blue-500 transition">
+                        <input type="email" placeholder="E-postadresse" class="w-full p-4 border border-slate-200 rounded outline-none focus:border-blue-500 transition">
+                        <textarea placeholder="Beskriv prosjektet eller behovet kort..." rows="4" class="w-full p-4 border border-slate-200 rounded outline-none focus:border-blue-500 transition"></textarea>
+                        <button class="w-full bg-blue-600 text-white font-bold py-4 rounded hover:bg-blue-700 transition uppercase tracking-widest text-sm">Send forespørsel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 bg-white border-t border-slate-200 text-center">
+        <p class="text-xs font-bold text-slate-400 uppercase tracking-[0.4em]">&copy; 2026 SOLRÅD AS // SIVILINGENIØRER</p>
+    </footer>
+
+</body>
+</html>
