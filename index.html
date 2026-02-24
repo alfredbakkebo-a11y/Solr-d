@@ -31,178 +31,225 @@
         .team-card:hover img {
             transform: scale(1.05);
         }
+        
+        /* Navigasjon og visning */
+        .section-content {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .hidden-view {
+            display: none !important;
+        }
+
+        /* Modal styling */
+        #details-modal {
+            transition: all 0.3s ease;
+        }
     </style>
 </head>
-<body class="bg-white text-slate-900">
+<body class="bg-white text-slate-900 overflow-x-hidden">
+
+    <!-- Modal for detaljert informasjon -->
+    <div id="details-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="relative bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden transform transition-all">
+            <div class="p-8 md:p-12">
+                <button onclick="closeModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-900 transition">
+                    <i class="fas fa-times fa-lg"></i>
+                </button>
+                <div id="modal-icon" class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 mb-6">
+                    <i class="fas fa-info-circle fa-2x"></i>
+                </div>
+                <h3 id="modal-title" class="text-3xl font-black text-slate-900 uppercase mb-4 tracking-tighter">Tittel</h3>
+                <div id="modal-content" class="text-slate-600 leading-relaxed space-y-4">
+                    <!-- Innhold settes via JS -->
+                </div>
+                <div class="mt-10 pt-6 border-t border-slate-100 flex justify-end">
+                    <button onclick="closeModal()" class="bg-slate-900 text-white px-8 py-3 rounded-lg font-bold hover:bg-slate-800 transition">Lukk</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tilbakepil -->
+    <div id="back-button" class="fixed bottom-8 left-8 z-[60] hidden">
+        <button onclick="showHome()" class="bg-blue-600 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center hover:bg-blue-700 transition-all hover:scale-110">
+            <i class="fas fa-arrow-left fa-lg"></i>
+        </button>
+    </div>
 
     <!-- Navigasjon -->
     <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between h-20 items-center">
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="showHome()">
                     <svg width="40" height="40" viewBox="0 0 100 100" fill="none" class="text-slate-900">
                         <path d="M50 10L10 50L20 60L50 30L80 60L90 50L50 10Z" fill="currentColor"/>
                         <path d="M30 70L50 90L70 70L50 50L30 70Z" fill="currentColor"/>
                     </svg>
                     <div class="flex flex-col">
-                        <span class="text-2xl font-black text-slate-900 leading-none uppercase tracking-tighter">Solråd</span>
+                        <span class="text-2xl font-black text-slate-900 leading-none uppercase tracking-tighter text-blue-600">Solråd</span>
                         <span class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Anbudsrådgivning</span>
                     </div>
                 </div>
                 <div class="hidden md:flex items-center space-x-8 text-xs font-bold uppercase tracking-widest">
-                    <a href="#leveranser" class="hover:text-blue-600 transition">Leveranser</a>
-                    <a href="#verdi" class="hover:text-blue-600 transition">Hvorfor oss?</a>
-                    <a href="#team" class="hover:text-blue-600 transition">Vårt Team</a>
-                    <a href="#kontakt" class="bg-slate-900 text-white px-5 py-2.5 rounded hover:bg-slate-800 transition">Kontakt oss</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('leveranser')" class="hover:text-blue-600 transition">Leveranser</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('verdi')" class="hover:text-blue-600 transition">Hvorfor oss?</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('team')" class="hover:text-blue-600 transition">Vårt Team</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('kontakt')" class="bg-slate-900 text-white px-5 py-2.5 rounded hover:bg-slate-800 transition">Kontakt oss</a>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero Seksjon -->
-    <header class="pt-40 pb-24 hero-gradient text-white">
+    <header id="hero" class="pt-40 pb-24 hero-gradient text-white section-content">
         <div class="max-w-7xl mx-auto px-6">
             <div class="max-w-4xl">
-                <h1 id="hero-title" class="text-5xl md:text-7xl font-extrabold leading-[1.1] mb-8">
+                <h1 class="text-5xl md:text-7xl font-extrabold leading-[1.1] mb-8">
                     Riktig solenergi på <br><span class="text-blue-400">riktige bygg</span>.
                 </h1>
-                <p id="hero-description" class="text-xl text-slate-300 leading-relaxed mb-10 max-w-2xl">
+                <p class="text-xl text-slate-300 leading-relaxed mb-10 max-w-2xl">
                     Solråd sikrer profesjonelle anskaffelser for offentlige og private aktører. Vi reduserer risiko og optimaliserer investeringen gjennom hele anbudsprosessen.
                 </p>
                 <div class="flex flex-wrap gap-4">
-                    <a href="#kontakt" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded font-bold transition">Start et prosjekt</a>
-                    <a href="#leveranser" class="bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded font-bold transition border border-white/20">Se våre leveranser</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('kontakt')" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded font-bold transition">Start et prosjekt</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('leveranser')" class="bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded font-bold transition border border-white/20">Se våre leveranser</a>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- Seksjon: Våre Leveranser -->
-    <section id="leveranser" class="py-24 bg-white">
+    <section id="leveranser" class="py-24 bg-white section-content">
         <div class="max-w-7xl mx-auto px-6">
             <div class="mb-16">
                 <h2 class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-4">Hva vi gjør</h2>
                 <h3 class="text-4xl font-black text-slate-900 uppercase tracking-tighter">Våre Leveranser</h3>
+                <p class="text-slate-500 mt-2">Klikk på hver rute for å lese mer om leveransen.</p>
                 <div class="w-16 h-1 bg-blue-600 mt-4"></div>
             </div>
             
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Leveranse 1 -->
-                <div class="bg-slate-50 p-8 rounded-xl tech-card">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-6">
+                <div onclick="openLeveranse('portefolje')" class="bg-slate-50 p-8 rounded-xl tech-card cursor-pointer group">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                         <i class="fas fa-city fa-lg"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-3">Porteføljeanalyse</h4>
-                    <p class="text-slate-600 text-sm leading-relaxed">Strategisk kartlegging av kommunale og private bygg for å identifisere de best egnede takflatene.</p>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">Strategisk kartlegging av bygg for å identifisere de best egnede takflatene.</p>
+                    <span class="text-blue-600 text-xs font-bold uppercase tracking-widest">Les mer +</span>
                 </div>
 
                 <!-- Leveranse 2 -->
-                <div class="bg-slate-50 p-8 rounded-xl tech-card">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-6">
+                <div onclick="openLeveranse('pvsol')" class="bg-slate-50 p-8 rounded-xl tech-card cursor-pointer group">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                         <i class="fas fa-laptop-code fa-lg"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-3">PVSol Simuleringer</h4>
-                    <p class="text-slate-600 text-sm leading-relaxed">Presise energiberegninger og simuleringer som gir et realistisk bilde av produksjonspotensialet.</p>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">Presise energiberegninger som gir et realistisk bilde av potensialet.</p>
+                    <span class="text-blue-600 text-xs font-bold uppercase tracking-widest">Les mer +</span>
                 </div>
 
                 <!-- Leveranse 3 -->
-                <div class="bg-slate-50 p-8 rounded-xl tech-card">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-6">
+                <div onclick="openLeveranse('okonomi')" class="bg-slate-50 p-8 rounded-xl tech-card cursor-pointer group">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                         <i class="fas fa-chart-line fa-lg"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-3">Økonomiske Estimater</h4>
-                    <p class="text-slate-600 text-sm leading-relaxed">Beregning av investeringskostnader og LCOE (Levelized Cost of Energy) for trygge beslutninger.</p>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">Beregning av investeringskostnader og LCOE for trygge beslutninger.</p>
+                    <span class="text-blue-600 text-xs font-bold uppercase tracking-widest">Les mer +</span>
                 </div>
 
                 <!-- Leveranse 4 -->
-                <div class="bg-slate-50 p-8 rounded-xl tech-card">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-6">
+                <div onclick="openLeveranse('kravspek')" class="bg-slate-50 p-8 rounded-xl tech-card cursor-pointer group">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                         <i class="fas fa-file-contract fa-lg"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-3">Kravspesifikasjon</h4>
-                    <p class="text-slate-600 text-sm leading-relaxed">Utarbeidelse av tekniske krav og tildelingskriterier som sikrer kvalitet og rettferdig konkurranse.</p>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">Utarbeidelse av tekniske krav som sikrer kvalitet og rettferdig konkurranse.</p>
+                    <span class="text-blue-600 text-xs font-bold uppercase tracking-widest">Les mer +</span>
                 </div>
 
                 <!-- Leveranse 5 -->
-                <div class="bg-slate-50 p-8 rounded-xl tech-card">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-6">
+                <div onclick="openLeveranse('kvalitet')" class="bg-slate-50 p-8 rounded-xl tech-card cursor-pointer group">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                         <i class="fas fa-shield-alt fa-lg"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-3">Kvalitetssikring</h4>
-                    <p class="text-slate-600 text-sm leading-relaxed">Gjennomgang av konkurransegrunnlag for å minimere risiko for feil, avlysninger eller klager.</p>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">Gjennomgang av dokumentasjon for å minimere risiko for feil og klager.</p>
+                    <span class="text-blue-600 text-xs font-bold uppercase tracking-widest">Les mer +</span>
                 </div>
 
                 <!-- Leveranse 6 -->
-                <div class="bg-slate-50 p-8 rounded-xl tech-card">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-6">
+                <div onclick="openLeveranse('evaluering')" class="bg-slate-50 p-8 rounded-xl tech-card cursor-pointer group">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                         <i class="fas fa-check-double fa-lg"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-3">Anbudsevaluering</h4>
-                    <p class="text-slate-600 text-sm leading-relaxed">Profesjonell evaluering av innkomne tilbud for å sikre at dere velger den beste løsningen.</p>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">Profesjonell vurdering av tilbud for å velge den beste løsningen.</p>
+                    <span class="text-blue-600 text-xs font-bold uppercase tracking-widest">Les mer +</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Seksjon: Hva dette gir (Verdi) -->
-    <section id="verdi" class="py-24 bg-slate-900 text-white">
+    <!-- Seksjon: Hvorfor oss? (GJENOPPRETTET OG FYLDIG) -->
+    <section id="verdi" class="py-24 bg-slate-900 text-white section-content">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div class="mb-16">
+                <h2 class="text-blue-400 font-bold uppercase tracking-widest text-sm mb-4">Verdiskapning</h2>
+                <h3 class="text-4xl font-black uppercase tracking-tighter">Hvorfor velge Solråd?</h3>
+                <div class="w-16 h-1 bg-blue-400 mt-4"></div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-16 items-start">
                 <div>
-                    <h2 class="text-blue-400 font-bold uppercase tracking-widest text-sm mb-4">Verdiskapning</h2>
-                    <h3 class="text-4xl font-black mb-8 uppercase">Hvorfor velge Solråd?</h3>
-                    <p class="text-slate-400 mb-8 leading-relaxed text-lg">
-                        Vår metodikk handler om mer enn bare tekniske tegninger. Vi skaper trygghet i hele anskaffelsesprosessen, fra første analyse til ferdig evaluert anbud.
+                    <p class="text-slate-300 mb-8 leading-relaxed text-lg">
+                        Vi kombinerer teknisk innsikt med juridisk og kommersiell forståelse for å sikre at deres solenergiprosjekter blir en suksess fra dag én. 
                     </p>
-                    <div class="grid sm:grid-cols-2 gap-6">
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-bolt text-yellow-400 mt-1"></i>
-                            <div>
-                                <h5 class="font-bold">Raskere gjennomføring</h5>
-                                <p class="text-slate-400 text-sm">Ferdige maler og dyp innsikt korter ned prosjekttiden.</p>
-                            </div>
+                    <div class="grid sm:grid-cols-2 gap-8">
+                        <div class="space-y-3">
+                            <div class="w-10 h-10 rounded-lg bg-blue-600/20 flex items-center justify-center text-blue-400"><i class="fas fa-bolt"></i></div>
+                            <h5 class="font-bold text-xl">Raskere gjennomføring</h5>
+                            <p class="text-slate-400 text-sm leading-relaxed">Våre ferdige maler og dype markedsinnsikt korter ned prosjekttiden betydelig, fra idé til ferdig anlegg.</p>
                         </div>
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-tags text-green-400 mt-1"></i>
-                            <div>
-                                <h5 class="font-bold">Bedre priser</h5>
-                                <p class="text-slate-400 text-sm">Tydelige krav gir mer presise og konkurransedyktige tilbud.</p>
-                            </div>
+                        <div class="space-y-3">
+                            <div class="w-10 h-10 rounded-lg bg-green-600/20 flex items-center justify-center text-green-400"><i class="fas fa-tags"></i></div>
+                            <h5 class="font-bold text-xl">Bedre priser</h5>
+                            <p class="text-slate-400 text-sm leading-relaxed">Tydelige krav fjerner usikkerhet hos leverandørene, noe som gir mer konkurransedyktige tilbud.</p>
                         </div>
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-exclamation-triangle text-red-400 mt-1"></i>
-                            <div>
-                                <h5 class="font-bold">Redusert risiko</h5>
-                                <p class="text-slate-400 text-sm">Minimerer faren for KOFA-klager og avlyste konkurranser.</p>
-                            </div>
+                        <div class="space-y-3">
+                            <div class="w-10 h-10 rounded-lg bg-red-600/20 flex items-center justify-center text-red-400"><i class="fas fa-shield-alt"></i></div>
+                            <h5 class="font-bold text-xl">Minimert risiko</h5>
+                            <p class="text-slate-400 text-sm leading-relaxed">Vi kvalitetssikrer prosessen for å minimere faren for KOFA-klager eller dyre endringsmeldinger.</p>
                         </div>
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-bullseye text-blue-400 mt-1"></i>
-                            <div>
-                                <h5 class="font-bold">Strategisk valg</h5>
-                                <p class="text-slate-400 text-sm">Riktig solcelleanlegg på de byggene der det lønner seg mest.</p>
-                            </div>
+                        <div class="space-y-3">
+                            <div class="w-10 h-10 rounded-lg bg-yellow-600/20 flex items-center justify-center text-yellow-400"><i class="fas fa-balance-scale"></i></div>
+                            <h5 class="font-bold text-xl">Uavhengig rådgivning</h5>
+                            <p class="text-slate-400 text-sm leading-relaxed">Som en uavhengig tredjepart har vi ingen bindinger. Vårt eneste fokus er deres beste interesse.</p>
                         </div>
                     </div>
                 </div>
-                <div class="relative">
-                    <div class="bg-blue-600/20 absolute -inset-4 rounded-3xl blur-2xl"></div>
-                    <div class="relative bg-slate-800 p-8 rounded-3xl border border-white/10 shadow-2xl">
-                        <h4 class="text-2xl font-bold mb-6">Resultatet for kunden</h4>
-                        <ul class="space-y-4">
-                            <li class="flex items-center gap-4 border-b border-white/5 pb-4">
-                                <span class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-sm font-bold">1</span>
-                                <span>Gjennomtenkt konkurransegrunnlag</span>
-                            </li>
-                            <li class="flex items-center gap-4 border-b border-white/5 pb-4">
-                                <span class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-sm font-bold">2</span>
-                                <span>Optimal innkjøpsstrategi</span>
-                            </li>
-                            <li class="flex items-center gap-4">
-                                <span class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-sm font-bold">3</span>
-                                <span>Trygghet for beslutningstakere</span>
-                            </li>
-                        </ul>
+                <div class="bg-slate-800 p-8 rounded-3xl border border-white/10 shadow-2xl">
+                    <h4 class="text-2xl font-bold mb-6 text-blue-400">Strategisk Verdi</h4>
+                    <ul class="space-y-6">
+                        <li class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center text-sm font-bold">1</div>
+                            <div>
+                                <h6 class="font-bold">Gjennomtenkt konkurransegrunnlag</h6>
+                                <p class="text-slate-400 text-sm">Tildelingskriterier som faktisk premierer kvalitet og bærekraft, ikke bare laveste pris.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center text-sm font-bold">2</div>
+                            <div>
+                                <h6 class="font-bold">Optimal innkjøpsstrategi</h6>
+                                <p class="text-slate-400 text-sm">Vi hjelper dere å velge riktig entrepriseform basert på porteføljens kompleksitet.</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="mt-8 pt-8 border-t border-white/5">
+                        <p class="text-blue-100 text-sm italic">"Riktig solcelleanlegg på de byggene der det faktisk lønner seg mest."</p>
                     </div>
                 </div>
             </div>
@@ -210,7 +257,7 @@
     </section>
 
     <!-- Team Seksjon -->
-    <section id="team" class="py-24 bg-white">
+    <section id="team" class="py-24 bg-white section-content">
         <div class="max-w-7xl mx-auto px-6">
             <div class="mb-16 text-center">
                 <h2 class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-4">Ekspertise du kan stole på</h2>
@@ -219,51 +266,37 @@
             </div>
             
             <div class="grid md:grid-cols-3 gap-12">
-                <!-- Person 1 -->
                 <div class="team-card group">
                     <div class="relative overflow-hidden rounded-2xl mb-6 bg-slate-100 aspect-[4/5]">
                         <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1974&auto=format&fit=crop" alt="Rådgiver 1" class="w-full h-full object-cover transition duration-500">
-                        <div class="absolute inset-0 bg-blue-600/10 group-hover:bg-transparent transition"></div>
                     </div>
                     <h4 class="text-xl font-bold text-slate-900">Navn Etternavn</h4>
                     <p class="text-blue-600 font-bold text-xs uppercase tracking-widest mb-4">Seniorkonsulent / Partner</p>
-                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">
-                        Spesialist på strategiske innkjøp med over 15 års erfaring fra offentlig sektor. Har ledet komplekse anbudsprosesser for flere av Norges største kommuner.
-                    </p>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">Spesialist på strategiske innkjøp med over 15 års erfaring fra offentlig sektor.</p>
                     <div class="space-y-2 text-slate-500 text-sm">
                         <p class="flex items-center gap-3"><i class="fas fa-envelope text-slate-300"></i> post@solraad.no</p>
                         <p class="flex items-center gap-3"><i class="fas fa-phone text-slate-300"></i> +47 000 00 000</p>
                     </div>
                 </div>
-
-                <!-- Person 2 -->
                 <div class="team-card group">
                     <div class="relative overflow-hidden rounded-2xl mb-6 bg-slate-100 aspect-[4/5]">
                         <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1976&auto=format&fit=crop" alt="Rådgiver 2" class="w-full h-full object-cover transition duration-500">
-                        <div class="absolute inset-0 bg-blue-600/10 group-hover:bg-transparent transition"></div>
                     </div>
                     <h4 class="text-xl font-bold text-slate-900">Navn Etternavn</h4>
                     <p class="text-blue-600 font-bold text-xs uppercase tracking-widest mb-4">Prosjektleder</p>
-                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">
-                        Ekspert på teknisk prosjektledelse og gjennomføring. Ansvarlig for over 50 vellykkede installasjoner av solcelleanlegg på kommunale bygg og idrettshaller.
-                    </p>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">Ekspert på teknisk prosjektledelse og gjennomføring av solcelleanlegg.</p>
                     <div class="space-y-2 text-slate-500 text-sm">
                         <p class="flex items-center gap-3"><i class="fas fa-envelope text-slate-300"></i> post@solraad.no</p>
                         <p class="flex items-center gap-3"><i class="fas fa-phone text-slate-300"></i> +47 000 00 000</p>
                     </div>
                 </div>
-
-                <!-- Person 3 -->
                 <div class="team-card group">
                     <div class="relative overflow-hidden rounded-2xl mb-6 bg-slate-100 aspect-[4/5]">
                         <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop" alt="Rådgiver 3" class="w-full h-full object-cover transition duration-500">
-                        <div class="absolute inset-0 bg-blue-600/10 group-hover:bg-transparent transition"></div>
                     </div>
                     <h4 class="text-xl font-bold text-slate-900">Navn Etternavn</h4>
                     <p class="text-blue-600 font-bold text-xs uppercase tracking-widest mb-4">Rådgivende Ingeniør</p>
-                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">
-                        Sivilingeniør med fokus på simuleringer og teknisk kvalitetssikring. Utfører detaljerte PVSol-beregninger som sikrer korrekte kravspesifikasjoner.
-                    </p>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">Sivilingeniør med fokus på simuleringer og teknisk kvalitetssikring.</p>
                     <div class="space-y-2 text-slate-500 text-sm">
                         <p class="flex items-center gap-3"><i class="fas fa-envelope text-slate-300"></i> post@solraad.no</p>
                         <p class="flex items-center gap-3"><i class="fas fa-phone text-slate-300"></i> +47 000 00 000</p>
@@ -274,52 +307,115 @@
     </section>
 
     <!-- Kontaktseksjon -->
-    <section id="kontakt" class="py-24 bg-slate-50">
+    <section id="kontakt" class="py-24 bg-slate-50 section-content">
         <div class="max-w-7xl mx-auto px-6">
             <div class="bg-slate-900 rounded-3xl overflow-hidden flex flex-col md:flex-row shadow-2xl border border-white/5">
-                <div class="md:w-1/2 p-12 lg:p-16">
-                    <h3 class="text-3xl font-bold text-white mb-6">Trenger dere hjelp med en anskaffelse?</h3>
-                    <p class="text-slate-400 mb-10">Vi bistår både offentlige oppdragsgivere og private selskaper med å navigere anbudsmarkedet for solenergi.</p>
-                    <div class="space-y-6">
-                        <div class="flex items-center gap-4 text-white">
-                            <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-blue-400">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <span class="font-medium">post@solraad.no</span>
+                <div class="md:w-1/2 p-12 lg:p-16 text-white">
+                    <h3 class="text-3xl font-bold mb-6">Start dialogen i dag</h3>
+                    <p class="text-slate-400 mb-10">Bistår offentlige og private aktører i hele Norge.</p>
+                    <div class="flex items-center gap-4 text-white">
+                        <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-blue-400">
+                            <i class="fas fa-envelope"></i>
                         </div>
-                        <div class="flex items-center gap-4 text-white">
-                            <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-blue-400">
-                                <i class="fas fa-building"></i>
-                            </div>
-                            <span class="font-medium">Spesialister på offentlige anskaffelser</span>
-                        </div>
+                        <span class="font-medium">post@solraad.no</span>
                     </div>
                 </div>
                 <div class="md:w-1/2 bg-white p-12 lg:p-16">
-                    <form class="space-y-5" onsubmit="event.preventDefault();">
-                        <div class="grid grid-cols-2 gap-4">
-                            <input type="text" placeholder="Navn" class="w-full p-4 border border-slate-200 rounded outline-none focus:border-blue-500 transition">
-                            <input type="text" placeholder="Organisasjon" class="w-full p-4 border border-slate-200 rounded outline-none focus:border-blue-500 transition">
-                        </div>
-                        <input type="email" placeholder="E-postadresse" class="w-full p-4 border border-slate-200 rounded outline-none focus:border-blue-500 transition">
-                        <select class="w-full p-4 border border-slate-200 rounded outline-none focus:border-blue-500 transition text-slate-500">
-                            <option value="">Hva trenger dere hjelp med?</option>
-                            <option value="portefolje">Porteføljeanalyse</option>
-                            <option value="simulering">PVSol Simulering / Energiberegning</option>
-                            <option value="kravspek">Kravspesifikasjon & Tildelingskriterier</option>
-                            <option value="anbud">Evaluering av anbud</option>
-                        </select>
-                        <textarea placeholder="Fortell litt om deres kommende prosjekt..." rows="4" class="w-full p-4 border border-slate-200 rounded outline-none focus:border-blue-500 transition"></textarea>
-                        <button class="w-full bg-blue-600 text-white font-bold py-4 rounded hover:bg-blue-700 transition uppercase tracking-widest text-sm">Send forespørsel</button>
+                    <form class="space-y-5">
+                        <input type="text" placeholder="Navn" class="w-full p-4 border border-slate-200 rounded outline-none focus:border-blue-500">
+                        <input type="email" placeholder="E-post" class="w-full p-4 border border-slate-200 rounded outline-none focus:border-blue-500">
+                        <textarea placeholder="Melding" rows="4" class="w-full p-4 border border-slate-200 rounded outline-none focus:border-blue-500"></textarea>
+                        <button class="w-full bg-blue-600 text-white font-bold py-4 rounded uppercase tracking-widest text-sm hover:bg-blue-700 transition">Send forespørsel</button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-12 bg-white border-t border-slate-200 text-center">
-        <p class="text-xs font-bold text-slate-400 uppercase tracking-[0.4em]">&copy; 2026 SOLRÅD AS // RÅDGIVENDE INGENIØRER SOLENERGI</p>
+    <!-- Footer -->
+    <footer id="footer" class="py-12 bg-white border-t border-slate-200 text-center section-content">
+        <div class="max-w-7xl mx-auto px-6">
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-[0.4em]">&copy; 2026 SOLRÅD AS // RÅDGIVENDE INGENIØRER</p>
+        </div>
     </footer>
+
+    <script>
+        const sections = ['hero', 'leveranser', 'verdi', 'team', 'kontakt', 'footer'];
+        const backBtn = document.getElementById('back-button');
+        const modal = document.getElementById('details-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-content');
+        const modalIcon = document.getElementById('modal-icon');
+
+        const leveranseData = {
+            'portefolje': {
+                title: 'Porteføljeanalyse',
+                icon: '<i class="fas fa-city fa-2x"></i>',
+                content: '<p>Vi kartlegger hele eiendomsporteføljen for å identifisere de mest lønnsomme takflatene. Vi ser på takflate, orientering, skyggeforhold og bygningsmasse for å prioritere utbyggingen strategisk.</p><p>Målet er å sikre at solcellene monteres der de gir høyest energiutbytte og best økonomisk gevinst for kunden.</p>'
+            },
+            'pvsol': {
+                title: 'PVSol Simuleringer',
+                icon: '<i class="fas fa-laptop-code fa-2x"></i>',
+                content: '<p>Ved bruk av bransjestandarden PVSol lager vi nøyaktige 3D-modeller av byggene. Dette gir oss presise tall på årsproduksjon, hensyntatt lokale værdata og naboobjekter som kaster skygge.</p><p>Dette eliminerer usikkerhet og gir et realistisk bilde av fremtidig strømproduksjon.</p>'
+            },
+            'okonomi': {
+                title: 'Økonomiske Estimater',
+                icon: '<i class="fas fa-chart-line fa-2x"></i>',
+                content: '<p>Vi beregner investeringskostnader basert på faktiske markedspriser. LCOE-analysen viser den faktiske kostnaden per produserte kWh over anleggets levetid (30 år).</p><p>Dette er et uunnværlig beslutningsunderlag for ledelsen og økonomiavdelingen.</p>'
+            },
+            'kravspek': {
+                title: 'Kravspesifikasjon',
+                icon: '<i class="fas fa-file-contract fa-2x"></i>',
+                content: '<p>En god teknisk spesifikasjon er nøkkelen til et anlegg med lang levetid. Vi beskriver alt fra panelkvalitet og festesystemer til overvåking og brannsikkerhet.</p><p>Dette sikrer at alle tilbydere regner på det samme, og forenkler sammenligningen av tilbud.</p>'
+            },
+            'kvalitet': {
+                title: 'Kvalitetssikring',
+                icon: '<i class="fas fa-shield-alt fa-2x"></i>',
+                content: '<p>Vi går gjennom anbudsdokumentene for å sikre at de juridiske og tekniske kravene henger sammen. Dette reduserer faren for misforståelser under montering og senere klagesaker.</p><p>Vi fungerer som kundens uavhengige vaktbikkje gjennom hele prosessen.</p>'
+            },
+            'evaluering': {
+                title: 'Anbudsevaluering',
+                icon: '<i class="fas fa-check-double fa-2x"></i>',
+                content: '<p>Når tilbudene kommer inn, hjelper vi med å sammenligne "epler og pærer". Vi ser bak prisen på teknisk løsning, garantivilkår og leverandørens kompetanse.</p><p>Vi leverer en ryddig evalueringsrapport som gjør det trygt for kunden å velge rett leverandør.</p>'
+            }
+        };
+
+        function openLeveranse(id) {
+            const data = leveranseData[id];
+            modalTitle.innerText = data.title;
+            modalIcon.innerHTML = data.icon;
+            modalContent.innerHTML = data.content;
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function navigateTo(targetId) {
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.add('hidden-view');
+            });
+            const target = document.getElementById(targetId);
+            if (target) {
+                target.classList.remove('hidden-view');
+                window.scrollTo(0, 0);
+            }
+            backBtn.classList.remove('hidden');
+        }
+
+        function showHome() {
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.remove('hidden-view');
+            });
+            backBtn.classList.add('hidden');
+            window.scrollTo(0, 0);
+        }
+    </script>
 
 </body>
 </html>
